@@ -1,73 +1,49 @@
-# EX 2B BACKTRACKING - NQUEEN PROBLEM
+# EX 2C BACKTRACKING- SUBSET SUM PROBLEM
 ## DATE: 29-10-2025
 ## AIM:
-To solve the N-Queen problem using backtracking, which places N queens on an N*N chessboard such that no two queens threaten each other.
+To demonstrate that the sum of the subset of a given set is equal to the given sum.
 
 
 ## Algorithm
-1. Read the value of N and create an N x N chessboard initialized with 0s.
-2. Define a function isSafe() to check if a queen can be placed at a given position by ensuring no other queens threaten it horizontally, and diagonally (upper-left and lower-left).
-3. Use a recursive function solveNQUtil() that tries to place queens column by column.
-4. If a safe position is found, place the queen and recursively try to place the rest; if it fails, backtrack and remove the queen.
-5. Print the board if a solution is found; otherwise, print "Solution does not exist".   
+1. Input the array a: Read the number of elements and then read the elements into list a.
+2. Input the target sum that needs to be achieved by any subset of a.
+3. Define a recursive function SubsetSum() to check whether the target sum can be achieved.
+4. At each step, either include the current element in the sum or exclude it, and move to the next element.
+5. Print "True, subset found" if a subset exists that matches the target; otherwise, print "False, subset not found".
 ## Program:
 ```
-Program to implement N-Queen problem using backtracking.
-Developed by: S.L.NARASIMHA REDDY
+Program to implement Subset sum problem.
+Developed by:  S.L.NARASIMHA REDDY
 Register Number:  212223040214
 ```
-```py
-global N
-N = int(input())
-
-def printSolution(board):
-    for i in range(N):
-        for j in range(N):
-            print(board[i][j], end=" ")
-        print()
-
-def isSafe(board, row, col):
-    for i in range(col):
-        if board[row][i] == 1:
-            return False
-
-    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
-        if board[i][j] == 1:
-            return False
-
-    for i, j in zip(range(row, N, 1), range(col, -1, -1)):
-        if board[i][j] == 1:
-            return False
-
-    return True
-
-def solveNQUtil(board, col):
-    if col >= N:
+```python
+def SubsetSum(a, i, current_sum, target, n):
+    if current_sum == target:
         return True
-
-    for i in range(N):
-        if isSafe(board, i, col):
-            board[i][col] = 1
-            if solveNQUtil(board, col + 1):
-                return True
-            board[i][col] = 0
-
-    return False
-
-def solveNQ():
-    board = [[0 for _ in range(N)] for _ in range(N)]
-    
-    if not solveNQUtil(board, 0):
-        print("Solution does not exist")
+    if i == n or current_sum > target:
         return False
 
-    printSolution(board)
-    return True
+    if SubsetSum(a, i + 1, current_sum + a[i], target, n):
+        return True
 
-solveNQ()
+    return SubsetSum(a, i + 1, current_sum, target, n)
+
+a = []
+size = int(input())
+for i in range(size):
+    x = int(input())
+    print(x)
+    a.append(x)
+
+target = int(input())
+n = len(a)
+if SubsetSum(a, 0, 0, target, n):
+    print("True,subset found")
+else:
+    print("False,subset not found")
 ```
 ## Output:
-![437671383-e99280b5-30fe-4c6d-a480-59f5d68983b6](https://github.com/user-attachments/assets/3c31cc51-e5e5-4e36-a20c-e3b4c970df19)
+![image](https://github.com/user-attachments/assets/aa9afeaa-4049-4034-bd90-6915183ba1af)
 
 ## Result:
-The N-Queens program executed successfully, and a valid board configuration was generated.
+The Subset Sum program executed successfully, and the result was determined based on whether a subset matching the target sum was found or not.
